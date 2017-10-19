@@ -2,7 +2,7 @@ import os
 import codecs
 import defs
 
-root_folder = 'data'
+root_folder = 'data/train'
 
 def get_input_and_labels(file_vector_size=10 * 1024, max_files=1000):
   """
