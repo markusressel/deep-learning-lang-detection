@@ -1,5 +1,5 @@
 # Deep Learning Programming Language Detection
-Deep Learning using Keras (and Tensorflow) to detect programming language of a code file. Approach for DL has been based on Zhang and LeCun's 2016 [paper](https://arxiv.org/pdf/1502.01710.pdf) "Text Understanding from Scratch". The main approach is that instead of using word2vec to create word embedding, characters are quantised (turned to one-hot-vector) and then the document is represented by a sequence of quantised characters (vectors). Currently the document is truncated at 2KB and smaller docs are padded by all zero vectors. 
+Deep Learning using Keras (and Tensorflow) to detect programming language of a code file. Approach for DL has been based on Zhang and LeCun's 2016 [paper](https://arxiv.org/pdf/1502.01710.pdf) "Text Understanding from Scratch". The main technique is that instead of using word2vec to create word embedding, characters are quantised (turned to one-hot-vector) and then the document is represented by a sequence of quantised characters (vectors). Currently the document is truncated at 2KB and smaller docs are padded by all zero vectors. 
 
 The code from @keon's Github [project](https://github.com/keon/keras-text-classification) was very helpful to get started and I used the some of the same structure.
 
@@ -32,13 +32,13 @@ If you have GPU enabled, it will automatically use it.
 ### Testing in batch mode
 
 ```python
-python train.py
+python test_run.py
 ```
 
 ### Testing a single file
 
 ```python
-python train.py mytestfile.something
+python test.py mytestfile.something
 ```
 
 This will print the result with likelihood for each 
