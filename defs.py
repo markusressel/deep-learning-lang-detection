@@ -33,3 +33,8 @@ def _setup():
     i += 1
 
 _setup()
+
+def get_lang_for_vector(one_hot_vector):
+  for i in range(0, len(one_hot_vector)):
+    if one_hot_vector[i]==1.0:
+      return langs[i]

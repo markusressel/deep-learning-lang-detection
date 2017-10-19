@@ -5,6 +5,9 @@ import numpy as np
 import defs
 
 print 'usage: test.py <filename>'
+if len(sys.argv) < 2:
+  exit(0)
+
 file_name = sys.argv[1]
 
 x = np.array([data_helper.turn_file_to_vector(file_name, file_vector_size=2048)])

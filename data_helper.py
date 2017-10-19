@@ -2,9 +2,11 @@ import os
 import codecs
 import defs
 
-root_folder = 'data/train'
+train_root_folder = 'data/train'
+test_root_folder = 'data/test'
 
-def get_input_and_labels(file_vector_size=10 * 1024, max_files=1000):
+
+def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 1024, max_files=1000):
   """
 
 
@@ -55,4 +57,5 @@ def turn_file_to_vector(file_name, file_vector_size=10 * 1024):
       file_vector.append(defs.pad_vector)
 
   return file_vector
+
 
