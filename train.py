@@ -12,16 +12,17 @@ number_of_classes = len(defs.langs)
 
 # Model Hyperparameters
 sequence_length = defs.file_characters_truncation_limit
-filter_sizes = (2, 5, 10, 20)
+filter_sizes = (2, 5, 9, 19)
+pooling_sizes = (2, 5, 9, 19)
 num_filters = 128
-dropout_prob = (0.2, 0.4)
+dropout_prob = (0.3, 0.6)
 hidden_dims = 128
 number_of_quantised_characters = len(defs.supported_chars)
 
 
 # Training parameters
-batch_size = 32
-num_epochs = 40
+batch_size = 100
+num_epochs = 30
 val_split = 0.1
 
 
@@ -32,24 +33,16 @@ val_split = 0.1
 print("Loading data...")
 x, y = data_helper.get_input_and_labels(file_vector_size=sequence_length, max_files=n_max_files)
 
-'''
-# Shuffle data
-shuffle_indices = np.random.permutation(np.arange(len(y)))
-x_shuffled = x[shuffle_indices]
-y_shuffled = y[shuffle_indices].argmax(axis=1)
-'''
-
-
 # Setting up the model
 graph_in = Input(shape=(sequence_length, number_of_quantised_characters))
 convs = []
-for fsz in filter_sizes:
+for i in range(0, len(filter_sizes)):
     conv = Convolution1D(nb_filter=num_filters,
-                         filter_length=fsz,
+                         filter_length=filter_sizes[i],
                          border_mode='valid',
                          activation='relu',
                          subsample_length=1)(graph_in)
-    pool = MaxPooling1D(pool_length=2)(conv)
+    pool = MaxPooling1D(pool_length=pooling_sizes[i])(conv)
     flatten = Flatten()(pool)
     convs.append(flatten)
 
@@ -67,7 +60,6 @@ model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, number_of_quant
 model.add(graph)
 model.add(Dense(hidden_dims))
 model.add(Dropout(dropout_prob[1]))
-model.add(Activation('relu'))
 model.add(Dense(number_of_classes))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])

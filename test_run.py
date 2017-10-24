@@ -1,6 +1,5 @@
 import data_helper
 import keras
-import sys
 import numpy as np
 import defs
 
@@ -24,15 +23,27 @@ model = keras.models.load_model('./save_tmp.h5')
 y_hat = model.predict(x)
 
 success = 0
+class_success = {}
+class_count = {}
 for i in range(0, len(y_hat)):
   yi = Y[i]
   y_hati = y_hat[i]
   expected = interpret_result(yi)
   predicted = interpret_result(y_hati)
 
+  if expected not in class_count:
+    class_count[expected] = 1
+  else:
+    class_count[expected] += 1
   if expected == predicted:
     success += 1
+    if predicted not in class_success:
+      class_success[predicted] = 1
+    else:
+      class_success[predicted] += 1
 
 print "Final result: {}/{} ({})".format(success, len(y_hat), (success * 1.0 / len(y_hat) * 1.0))
 
+for key in class_count:
+  print "{}/{} ({})".format(class_success[key], class_count[key], class_success[key] * 1.0 / class_count[key] * 1.0)
 
