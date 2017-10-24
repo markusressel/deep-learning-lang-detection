@@ -16,7 +16,7 @@ def interpret_result(yhati):
 
 X, Y = data_helper.get_input_and_labels(data_helper.test_root_folder,
                                         defs.file_characters_truncation_limit,
-                                        max_files=100)
+                                        max_files=1000)
 
 x = np.array(X)
 model = keras.models.load_model('./save_tmp.h5')
@@ -45,5 +45,7 @@ for i in range(0, len(y_hat)):
 print "Final result: {}/{} ({})".format(success, len(y_hat), (success * 1.0 / len(y_hat) * 1.0))
 
 for key in class_count:
-  print "{}/{} ({})".format(class_success[key], class_count[key], class_success[key] * 1.0 / class_count[key] * 1.0)
+  if key not in class_success:
+    class_success[key] = 0
+  print "{}:\t\t{}/{} ({})".format(key, class_success[key], class_count[key], class_success[key] * 1.0 / class_count[key] * 1.0)
 
