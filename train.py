@@ -1,8 +1,10 @@
 import numpy as np
 import data_helper
 from keras.models import Sequential, Model
-from keras.layers import Activation, Dense, Dropout, Embedding, Flatten, Input, Merge, Convolution1D, MaxPooling1D
+from keras.layers import Activation, Dense, Dropout, Flatten, Input, Conv1D, MaxPooling1D
+from keras.layers.merge import Concatenate
 import defs
+
 
 np.random.seed(2)
 
@@ -37,24 +39,25 @@ x, y = data_helper.get_input_and_labels(file_vector_size=sequence_length, max_fi
 graph_in = Input(shape=(sequence_length, number_of_quantised_characters))
 convs = []
 for i in range(0, len(filter_sizes)):
-    conv = Convolution1D(nb_filter=num_filters,
-                         filter_length=filter_sizes[i],
-                         border_mode='valid',
-                         activation='relu',
-                         subsample_length=1)(graph_in)
-    pool = MaxPooling1D(pool_length=pooling_sizes[i])(conv)
+    conv = Conv1D(filter=num_filters,
+                  kernel_size=filter_sizes[i],
+                  padding='valid',
+                  activation='relu',
+                  strides=1)(graph_in)
+    pool = MaxPooling1D(pool_size=pooling_sizes[i])(conv)
     flatten = Flatten()(pool)
     convs.append(flatten)
 
 if len(filter_sizes)>1:
-    out = Merge(mode='concat')(convs)
+    out = Concatenate()(convs)
 else:
     out = convs[0]
 
-graph = Model(input=graph_in, output=out)
+graph = Model(inputs= graph_in, outputs=out)
 
 # main sequential model
 model = Sequential()
+
 
 model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, number_of_quantised_characters)))
 model.add(graph)
@@ -67,6 +70,6 @@ model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['a
 # Training model
 # ==================================================
 model.fit(x, y, batch_size=batch_size,
-          nb_epoch=num_epochs, validation_split=val_split, verbose=1)
+          epoch=num_epochs, validation_split=val_split, verbose=1)
 
 model.save('save_tmp.h5')

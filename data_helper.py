@@ -1,6 +1,7 @@
 import os
 import codecs
 import defs
+import re
 
 train_root_folder = 'data/train'
 test_root_folder = 'data/test'
@@ -41,12 +42,19 @@ def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 10
 
   return X, Y
 
-def turn_file_to_vector(file_name, file_vector_size=10 * 1024):
+def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitespace=True):
   file_vector = []  # will be byte array
   text = ""
   with codecs.open(file_name, mode='r', encoding='utf-8') as f:
     text = f.read()
-  text = text.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ')
+
+  # Normalising whitespace
+  # NOTE: this could backfire due to whitespace significant languages
+  # but allows for more code consumed
+  if normalise_whitespace:
+    text = text.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ')
+    text = re.sub('\s+', ' ', text)
+
   text = text[0:file_vector_size]
   for ch in text:
     if ch in defs.supported_chars_map:
