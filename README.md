@@ -6,6 +6,10 @@ The code from @keon's Github [project](https://github.com/keon/keras-text-classi
 ## Purpose
 The project is set up to demonstrate - in simple steps - how to use Keras to build a Deep Learning (DL) model to reconise programming language of a code file. This can be used to detect language of code snippets but needs to be trained for it - the dataset provided with the project can be turned to snippets and then add to the training set.  
 
+## Languages
+15 language was chosen as below:
+XML, F#, Clojure, Java, Scala, Python, Javascript, C++, CSS, C#, go, PHP, Ruby, Powershell and bash
+
 ## Data
 All the data was extracted from Github using its search feature. Common inert words used for search where the word is not a keyword in a language. The words used are:
 
@@ -64,9 +68,8 @@ This will print the result with likelihood for each
   - scala:     		39.0%
   - clojure:     	0.0%
   - fsharp:     	0.0%
-  - sql:     		0.0%
 ```
 
 ## Results
 
-System currently achieves **84.7% accuracy** on test data.
+System currently achieves **97.1% accuracy** on test data (not seen).
