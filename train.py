@@ -70,6 +70,6 @@ model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['a
 # Training model
 # ==================================================
 model.fit(x, y, batch_size=batch_size,
-          epoch=num_epochs, validation_split=val_split, verbose=1)
+          epochs=num_epochs, validation_split=val_split, verbose=1)
 
 model.save('save_tmp.h5')
