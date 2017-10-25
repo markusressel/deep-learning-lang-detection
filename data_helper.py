@@ -2,6 +2,7 @@ import os
 import codecs
 import defs
 import re
+import numpy as np
 
 train_root_folder = 'data/train'
 test_root_folder = 'data/test'
@@ -40,7 +41,7 @@ def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 10
         print e
     i += 1
 
-  return X, Y
+  return np.array(X), np.array(Y)
 
 def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitespace=True):
   file_vector = []  # will be byte array
@@ -64,6 +65,6 @@ def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitesp
     for j in range(0, file_vector_size - len(file_vector)):
       file_vector.append(defs.pad_vector)
 
-  return file_vector
+  return np.array(file_vector)
 
 

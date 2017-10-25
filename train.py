@@ -35,6 +35,11 @@ val_split = 0.1
 print("Loading data...")
 x, y = data_helper.get_input_and_labels(file_vector_size=sequence_length, max_files=n_max_files)
 
+# Shuffle data
+shuffle_indices = np.random.permutation(np.arange(len(y)))
+x_shuffled = x[shuffle_indices]
+y_shuffled = y[shuffle_indices].argmax(axis=1)
+
 # Setting up the model
 graph_in = Input(shape=(sequence_length, number_of_quantised_characters))
 convs = []
@@ -63,7 +68,7 @@ model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, number_of_quant
 model.add(graph)
 model.add(Dense(hidden_dims))
 model.add(Dropout(dropout_prob[1]))
-model.add(Dense(number_of_classes+1)) # seems last one is always zero - could be a bug in Keras?
+model.add(Dense(number_of_classes))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
 

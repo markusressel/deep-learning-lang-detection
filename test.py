@@ -19,4 +19,4 @@ result = model.predict_proba(x)
 print(y)
 
 for i in range(0, len(defs.langs)):
-  print "{} - {}:     \t\t{}%".format(' ' if (y[0][i] < 0.5) else '*', defs.langs[i], round(100 * y[0][i]), 3)
+  print "{} - {}:     \t\t{}%".format(' ' if (y[0][i] < 0.5) else '*', defs.langs[i], round(100 * y[0][i]), 4)
