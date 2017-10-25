@@ -9,7 +9,7 @@ import defs
 np.random.seed(2)
 
 # data parameters
-n_max_files = 1000 # max number of files per class to load
+n_max_files = 2000 # max number of files per class to load
 number_of_classes = len(defs.langs)
 
 # Model Hyperparameters
@@ -39,7 +39,7 @@ x, y = data_helper.get_input_and_labels(file_vector_size=sequence_length, max_fi
 graph_in = Input(shape=(sequence_length, number_of_quantised_characters))
 convs = []
 for i in range(0, len(filter_sizes)):
-    conv = Conv1D(filter=num_filters,
+    conv = Conv1D(filters=num_filters,
                   kernel_size=filter_sizes[i],
                   padding='valid',
                   activation='relu',
