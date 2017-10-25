@@ -13,8 +13,8 @@ langs = [
   'python',
   'scala',
   'clojure',
-  'fsharp'
-  # 'sql' removed due to poor github examples
+  'fsharp',
+  'sql'
 ]
 
 file_characters_truncation_limit = 2 * 1024 # 2KB

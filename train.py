@@ -53,7 +53,7 @@ if len(filter_sizes)>1:
 else:
     out = convs[0]
 
-graph = Model(inputs= graph_in, outputs=out)
+graph = Model(inputs=graph_in, outputs=out)
 
 # main sequential model
 model = Sequential()
@@ -63,7 +63,7 @@ model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, number_of_quant
 model.add(graph)
 model.add(Dense(hidden_dims))
 model.add(Dropout(dropout_prob[1]))
-model.add(Dense(number_of_classes))
+model.add(Dense(number_of_classes+1)) # seems last one is always zero - could be a bug in Keras?
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
 
