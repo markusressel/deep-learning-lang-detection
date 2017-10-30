@@ -14,6 +14,10 @@ def interpret_result(yhati):
       return defs.langs[i]
 
 
+# this is due to an unknown issue:
+# https://stackoverflow.com/questions/47025036/keras-network-can-never-classify-the-last-class
+defs.langs = defs.langs[0:15]
+
 X, Y = data_helper.get_input_and_labels(data_helper.test_root_folder,
                                         defs.file_characters_truncation_limit,
                                         max_files=1000)

@@ -1,14 +1,14 @@
 # Deep Learning Programming Language Detection
-Deep Learning using Keras (and Tensorflow) to detect programming language of a code file (currently achieves 97.1% accuracy). Approach for DL has been based on Zhang and LeCun's 2016 [paper](https://arxiv.org/pdf/1502.01710.pdf) "Text Understanding from Scratch". The main technique is that instead of using word2vec to create word embedding, characters are quantised (turned to one-hot-vector) and then the document is represented by a sequence of quantised characters (vectors). Currently the document is truncated at 2KB and smaller docs are padded by all zero vectors. 
+Deep Learning using Keras (and Tensorflow) to detect programming language of a code file (currently achieves 98.5% accuracy). Approach for DL has been based on Zhang and LeCun's 2016 [paper](https://arxiv.org/pdf/1502.01710.pdf) "Text Understanding from Scratch". The main technique is that instead of using word2vec to create word embedding, characters are quantised (turned to one-hot-vector) and then the document is represented by a sequence of quantised characters (vectors). Currently the document is truncated at 2KB and smaller docs are padded by all zero vectors. 
 
-The code from @keon's Github [project](https://github.com/keon/keras-text-classification) was very helpful to get started and I used the some of the same structure.
+The code from @keon's Github [project](https://github.com/keon/keras-text-classification) was helpful to get started and I used some of the same structures.
 
 ## Purpose
 The project is set up to demonstrate - in simple steps - how to use Keras to build a Deep Learning (DL) model to reconise programming language of a code file. This can be used to detect language of code snippets but needs to be trained for it - the dataset provided with the project can be turned to snippets and then add to the training set.  
 
 ## Languages
-15 language was chosen as below:
-XML, F#, Clojure, Java, Scala, Python, Javascript, C++, CSS, C#, go, PHP, Ruby, Powershell and bash
+16 language was chosen as below:
+XML, F#, Clojure, Java, Scala, Python, Javascript, C++, CSS, C#, go, PHP, Ruby, Powershell and bash (and SQL)
 
 ## Data
 All the data was extracted from Github using its search feature. Common inert words used for search where the word is not a keyword in a language. The words used are:
@@ -18,7 +18,7 @@ mapping, dispatch, copy, duplicate, sample, chunk, instrument
 calculate, append, repository, facade, handler, message, invoke,
 controller, locator, customer, view, model, nav, show, new, old, legacy
 
-Data are separated into training (~2000 per language) and test (~1000).
+Data are separated into training (~2000 per language) and test (~1000 per language).
 
 ## Run the code
 You need Keras (and TensorFlow). The code is in python 2.7.
@@ -72,4 +72,4 @@ This will print the result with likelihood for each
 
 ## Results
 
-System currently achieves **97.1% accuracy** on test data (not seen).
+System currently achieves **98.5% accuracy** on test data (not seen).
