@@ -1,7 +1,9 @@
 # Deep Learning Programming Language Detection
 Deep Learning using Keras (and Tensorflow) to detect programming language of a code file (currently achieves 98.5% accuracy). Approach for DL has been based on Zhang and LeCun's 2016 [paper](https://arxiv.org/pdf/1502.01710.pdf) "Text Understanding from Scratch". The main technique is that instead of using word2vec to create word embedding, characters are quantised (turned to one-hot-vector) and then the document is represented by a sequence of quantised characters (vectors). Currently the document is truncated at 2KB and smaller docs are padded by all zero vectors. 
 
-The code from @keon's Github [project](https://github.com/keon/keras-text-classification) was helpful to get started and I used some of the same structures.
+The code from @keon's Github [project](https://github.com/keon/keras-text-classification) was helpful to get started and I used some of the same structures. [I recently realised he has removed the code ever since]
+
+You can download a pre-trained model from [here](!!!). This model is trained on GPU over 8 hours.
 
 ## Purpose
 The project is set up to demonstrate - in simple steps - how to use Keras to build a Deep Learning (DL) model to reconise programming language of a code file. This can be used to detect language of code snippets but needs to be trained for it - the dataset provided with the project can be turned to snippets and then add to the training set.  
@@ -70,6 +72,20 @@ This will print the result with likelihood for each
   - fsharp:     	0.0%
 ```
 
+## Interactive UI
+
+To run the interactive UI, run the wsgi.py file:
+
+```python
+python wsgi.py
+```
+
+And you should see application exposed ar port 5000. Browse to [http://127.0.0.1:5000](http://127.0.0.1:5000) and you should see the UI page. Scroll down and either enter a URL or content of a file. Beware, the model is not trained on (unless you gather samples and train yourselves)
+
+![UI](asset/ui.png)
+
+[Picture is taken from [Kirill Eremenko's Kickstarter](https://www.kickstarter.com/projects/kirilleremenko/deep-learning-a-ztm-online-course) page. Hence his kickstarte is featured on the UI. There is no affiliation and none of the course material was used.].
+
 ## Results
 
-System currently achieves **98.5% accuracy** on test data (not seen).
+System currently achieves **98.7% accuracy** on test data (not seen).

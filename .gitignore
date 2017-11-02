@@ -37,4 +37,5 @@ nosetests.xml
 
 *.swp
 *.h5
+*.log
 .idea
