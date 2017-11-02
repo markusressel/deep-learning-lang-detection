@@ -80,7 +80,7 @@ To run the interactive UI, run the wsgi.py file:
 python wsgi.py
 ```
 
-And you should see application exposed ar port 5000. Browse to [http://127.0.0.1:5000](http://127.0.0.1:5000) and you should see the UI page. Scroll down and either enter a URL or content of a file. Beware, the model is not trained on (unless you gather samples and train yourselves)
+And you should see application exposed ar port 5000. Browse to [http://127.0.0.1:5000](http://127.0.0.1:5000) and you should see the UI page. Scroll down and either enter a URL or content of a file. Beware, the model is not trained on code snippets so recognition is much poorer on snippets (unless you gather samples and train yourselves).
 
 ![UI](asset/ui.png)
 
