@@ -38,7 +38,7 @@ x, y = data_helper.get_input_and_labels(file_vector_size=sequence_length, max_fi
 # Shuffle data
 shuffle_indices = np.random.permutation(np.arange(len(y)))
 x_shuffled = x[shuffle_indices]
-y_shuffled = y[shuffle_indices].argmax(axis=1)
+y_shuffled = y[shuffle_indices]
 
 # Setting up the model
 graph_in = Input(shape=(sequence_length, number_of_quantised_characters))
