@@ -15,8 +15,6 @@ if __name__ == '__main__':
 app = Flask(__name__)
 application = app
 
-defs.langs = defs.langs[0:15]
-
 try:
   file_handler = FileHandler("lang_detection.log", "a")
   file_handler.setLevel(logging.WARNING)
