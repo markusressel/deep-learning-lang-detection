@@ -52,7 +52,7 @@ def turn_url_to_vector(f_url, file_vector_size=10 * 1024, normalise_whitespace=T
 def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitespace=True):
   text = ""
   with codecs.open(file_name, mode='r', encoding='utf-8') as f:
-    text = f.read()
+    text = f.read().lower()
   return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
 
 def turn_text_to_vector(text, file_vector_size=10 * 1024, normalise_whitespace=True):
