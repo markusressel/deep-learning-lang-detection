@@ -12,7 +12,6 @@ test_root_folder = 'data/test'
 def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 1024, max_files=1000, breakup=False):
   """
 
-
   :return: X, Y
   X is a an array of inputs where each input is a padded array of quantised character one-hot vectors
   Y is basically one-hot vector of the class definition
@@ -35,7 +34,7 @@ def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 10
       file_name = os.path.join(folder, fn)
       try:
         file_vector = turn_file_to_vector(file_name, file_vector_size, breakup=breakup)
-        if(len(file_vector) == 3):  # in fact it has been broken to 3 parts
+        if len(file_vector) == 3:  # it has been broken to 3 parts
           for fv in file_vector:
             X.append(fv)
             Y.append(vect)
@@ -59,13 +58,19 @@ def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitesp
   with codecs.open(file_name, mode='r', encoding='utf-8') as f:
     text = f.read().lower()
   if(breakup):
-    return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
-  else:
     return turn_text_to_vectors(text, file_vector_size, normalise_whitespace)
+  else:
+    return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
 
 def turn_text_to_vector(text, file_vector_size=10 * 1024, normalise_whitespace=True):
+  """
+  extracts feature vector from text
+  :param text: text
+  :param file_vector_size: size of the vector
+  :param normalise_whitespace: replacing all whitespace to space
+  :return: vector
+  """
   file_vector = []  # will be byte array
-
   # Normalising whitespace
   # NOTE: this could backfire due to whitespace significant languages
   # but allows for more code consumed
@@ -87,26 +92,29 @@ def turn_text_to_vector(text, file_vector_size=10 * 1024, normalise_whitespace=T
 
 def turn_text_to_vectors(text, file_vector_size=10 * 1024, normalise_whitespace=True):
   """
-  breaks a file to 3 files: second third, last third and full text
+  breaks a file to 3 files if > 100 lines: second third, last third and full text
   :param text:
   :param file_vector_size:
   :param normalise_whitespace: replacing all whitespace to space
-  :return: array of size 3 of file vectors
+  :return: file vector or array of size 3 of file vectors
   """
-
-  file_vectors = []  # will be array of file vectors where each is vector of a snippet
-  file_vector = []  # will be byte array
 
   lines = text.split('\n')
   nlines = len(lines)
-  third = nlines/3
-  twoThird = 2*nlines/3
-  text2 = '\n'.join(lines[third:twoThird])
-  text3 = '\n'.join(lines[twoThird:])
+  if nlines > 50:
+    third = nlines/3
+    twoThird = 2*third
+    text2 = '\n'.join(lines[third:twoThird])
+    text3 = '\n'.join(lines[twoThird:])
+    print text2
 
-  file_vectors.append(turn_text_to_vector(text, file_vector_size, normalise_whitespace))
-  file_vectors.append(turn_text_to_vector(text2, file_vector_size, normalise_whitespace))
-  file_vectors.append(turn_text_to_vector(text3, file_vector_size, normalise_whitespace))
-  return file_vectors
+    file_vectors = []  # will be array of file vectors where each is vector of a snippet
+
+    file_vectors.append(turn_text_to_vector(text, file_vector_size, normalise_whitespace))
+    file_vectors.append(turn_text_to_vector(text2, file_vector_size, normalise_whitespace))
+    file_vectors.append(turn_text_to_vector(text3, file_vector_size, normalise_whitespace))
+    return file_vectors
+  else:
+    return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
 
 

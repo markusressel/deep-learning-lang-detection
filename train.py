@@ -14,8 +14,8 @@ number_of_classes = len(defs.langs)
 
 # Model Hyperparameters
 sequence_length = defs.file_characters_truncation_limit
-filter_sizes = (3, 5, 9, 19)
-pooling_sizes = (2, 5, 9, 19)
+filter_sizes = (5, 10, 19)
+pooling_sizes = (5, 10, 19)
 num_filters = 128
 dropout_prob = (0.3, 0.6)
 hidden_dims = 128
