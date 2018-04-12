@@ -106,7 +106,6 @@ def turn_text_to_vectors(text, file_vector_size=10 * 1024, normalise_whitespace=
     twoThird = 2*third
     text2 = '\n'.join(lines[third:twoThird])
     text3 = '\n'.join(lines[twoThird:])
-    print text2
 
     file_vectors = []  # will be array of file vectors where each is vector of a snippet
 

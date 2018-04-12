@@ -63,7 +63,6 @@ graph = Model(inputs=graph_in, outputs=out)
 # main sequential model
 model = Sequential()
 
-
 model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, number_of_quantised_characters)))
 model.add(graph)
 model.add(Dense(hidden_dims))
