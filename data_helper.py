@@ -98,7 +98,7 @@ def turn_text_to_vectors(text, file_vector_size=10 * 1024, normalise_whitespace=
   file_vector = []  # will be byte array
 
   lines = text.split('\n')
-  nlines = count(lines)
+  nlines = len(lines)
   third = nlines/3
   twoThird = 2*nlines/3
   text2 = '\n'.join(lines[third:twoThird])

@@ -10,7 +10,7 @@ if len(sys.argv) < 2:
 
 file_name = sys.argv[1]
 
-x = np.array([data_helper.turn_file_to_vector(file_name, file_vector_size=2048)])
+x = np.array([data_helper.turn_file_to_vector(file_name, file_vector_size=10*1024)])
 model = keras.models.load_model('./save_tmp.h5')
 y = model.predict(x)
 
