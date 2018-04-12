@@ -9,7 +9,7 @@ train_root_folder = 'data/train'
 test_root_folder = 'data/test'
 
 
-def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 1024, max_files=1000):
+def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 1024, max_files=1000, breakup=False):
   """
 
 
@@ -34,9 +34,14 @@ def get_input_and_labels(root_folder=train_root_folder, file_vector_size=10 * 10
         break
       file_name = os.path.join(folder, fn)
       try:
-        file_vector = turn_file_to_vector(file_name, file_vector_size)
-        X.append(file_vector)
-        Y.append(vect)
+        file_vector = turn_file_to_vector(file_name, file_vector_size, breakup=breakup)
+        if(len(file_vector) == 3):  # in fact it has been broken to 3 parts
+          for fv in file_vector:
+            X.append(fv)
+            Y.append(vect)
+        else:
+          X.append(file_vector)
+          Y.append(vect)
         n += 1
       except Exception as e:
         print e
@@ -49,11 +54,14 @@ def turn_url_to_vector(f_url, file_vector_size=10 * 1024, normalise_whitespace=T
   r = requests.get(f_url)
   return turn_text_to_vector(r.text, file_vector_size, normalise_whitespace)
 
-def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitespace=True):
+def turn_file_to_vector(file_name, file_vector_size=10 * 1024, normalise_whitespace=True, breakup=False):
   text = ""
   with codecs.open(file_name, mode='r', encoding='utf-8') as f:
     text = f.read().lower()
-  return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
+  if(breakup):
+    return turn_text_to_vector(text, file_vector_size, normalise_whitespace)
+  else:
+    return turn_text_to_vectors(text, file_vector_size, normalise_whitespace)
 
 def turn_text_to_vector(text, file_vector_size=10 * 1024, normalise_whitespace=True):
   file_vector = []  # will be byte array
@@ -75,5 +83,30 @@ def turn_text_to_vector(text, file_vector_size=10 * 1024, normalise_whitespace=T
       file_vector.append(defs.pad_vector)
 
   return np.array(file_vector)
+
+
+def turn_text_to_vectors(text, file_vector_size=10 * 1024, normalise_whitespace=True):
+  """
+  breaks a file to 3 files: second third, last third and full text
+  :param text:
+  :param file_vector_size:
+  :param normalise_whitespace: replacing all whitespace to space
+  :return: array of size 3 of file vectors
+  """
+
+  file_vectors = []  # will be array of file vectors where each is vector of a snippet
+  file_vector = []  # will be byte array
+
+  lines = text.split('\n')
+  nlines = count(lines)
+  third = nlines/3
+  twoThird = 2*nlines/3
+  text2 = '\n'.join(lines[third:twoThird])
+  text3 = '\n'.join(lines[twoThird:])
+
+  file_vectors.append(turn_text_to_vector(text, file_vector_size, normalise_whitespace))
+  file_vectors.append(turn_text_to_vector(text2, file_vector_size, normalise_whitespace))
+  file_vectors.append(turn_text_to_vector(text3, file_vector_size, normalise_whitespace))
+  return file_vectors
 
 
